@@ -1,0 +1,60 @@
+class Student:
+    def __init__(self, name, marks):
+        self.name = name
+        self.marks = marks
+        self.total = sum(marks)
+        self.average = self.total / len(marks)
+        self.grade = self.calculate_grade()
+
+    def calculate_grade(self):
+        if self.average >= 90:
+            return 'A'
+        elif self.average >= 75:
+            return 'B'
+        elif self.average >= 60:
+            return 'C'
+        elif self.average >= 50:
+            return 'D'
+        else:
+            return 'F'
+
+    def display(self):
+        print(f"\nName: {self.name}")
+        print(f"Marks: {self.marks}")
+        print(f"Total: {self.total}")
+        print(f"Average: {self.average:.2f}")
+        print(f"Grade: {self.grade}")
+
+
+# List to store students
+students = []
+
+# Input number of students
+n = int(input("Enter number of students: "))
+
+for i in range(n):
+    name = input(f"\nEnter name of student {i + 1}: ")
+    marks = list(map(int, input("Enter marks (space separated): ").split()))
+
+    student = Student(name, marks)
+    students.append(student)
+
+# Display all students
+print("\n--- Student Performance ---")
+for s in students:
+    s.display()
+
+# Find topper
+topper = max(students, key=lambda x: x.average)
+print(f"\nTopper: {topper.name} with average {topper.average:.2f}")
+
+# Class analysis
+class_avg = sum(s.average for s in students) / len(students)
+print(f"\nClass Average: {class_avg:.2f}")
+
+# Pass/Fail count
+pass_count = sum(1 for s in students if s.grade != 'F')
+fail_count = n - pass_count
+
+print(f"Passed Students: {pass_count}")
+print(f"Failed Students: {fail_count}")
